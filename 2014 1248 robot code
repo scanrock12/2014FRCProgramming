@@ -1,0 +1,132 @@
+
+package edu.wpi.first.wpilibj.templates;
+
+
+import edu.wpi.first.wpilibj.IterativeRobot;
+    
+import edu.wpi.first.wpilibj.Talon;
+
+import edu.wpi.first.wpilibj.RobotDrive;
+
+import edu.wpi.first.wpilibj.Solenoid;
+
+import edu.wpi.first.wpilibj.Compressor;
+
+import edu.wpi.first.wpilibj.Joystick;
+
+import edu.wpi.first.wpilibj.Timer;
+
+     
+
+
+
+public class RobotTemplate extends IterativeRobot {
+    static Talon fR, bR, fL, bL, shoot1, shoot2;
+    static Solenoid pist1, pist2, pist3, pist4, pist5;
+    static Joystick joy;
+    static Compressor compress;
+    static RobotDrive drive;
+    static boolean toggle = true;
+    
+    
+    
+    
+    public void robotInit() {
+        Start();
+        compress.start();
+        
+        
+
+    }
+    
+    
+    
+    
+    public void autonomousPeriodic() {
+
+    }
+
+   
+    
+    
+    public void teleopPeriodic() {
+        Driving();
+        
+    }
+    
+    
+    
+    
+    public void testPeriodic() {
+    
+    }
+ 
+    public static void Start(){
+       fR = new Talon(1);
+       bR = new Talon(2);
+       fL = new Talon(3);
+       bL = new Talon(4);
+       shoot1 = new Talon(5);
+       shoot2 = new Talon(6);
+       joy = new Joystick(1);
+       compress = new Compressor(3, 7);
+       pist1 = new Solenoid(1);
+       pist2 = new Solenoid(2);
+       pist3 = new Solenoid(3);
+       pist4 = new Solenoid(4);
+       pist5 = new Solenoid(5);
+       drive = new RobotDrive(fR, bR, fL, bL);
+       }
+    
+    public static void Driving(){
+        drive.arcadeDrive(joy);
+        if(joy.getRawButton(2)){
+            shoot1.set(1);
+        }
+        else{
+                shoot1.set(0);}
+        
+        if(joy.getRawButton(3)){
+            shoot2.set(1);
+        }
+        else{
+                shoot2.set(0);}
+    
+        if(joy.getRawButton(1) && toggle == true){
+            pist1.set(true);
+            toggle = false;}
+        if(joy.getRawButton(1) && toggle == false){
+            pist1.set(false);
+            toggle = true;}
+        
+        if(joy.getRawButton(4) && toggle == true){
+            pist2.set(true);
+            toggle = false;}
+        if(joy.getRawButton(4) && toggle == false){
+            pist2.set(false);
+            toggle = true;}
+        
+        if(joy.getRawButton(5) && toggle == true){
+            pist3.set(true);
+            toggle = false;}
+        if(joy.getRawButton(5) && toggle == false){
+            pist3.set(false);
+            toggle = true;}
+        
+        if(joy.getRawButton(6)){
+            pist4.set(true);
+            Timer.delay(1.0);
+            pist5.set(true);
+            Timer.delay(1.0);
+            pist4.set(false);
+            pist5.set(false);}
+                    
+        
+        
+        
+        
+    
+        
+        
+    }
+}
